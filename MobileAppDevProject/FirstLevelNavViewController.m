@@ -55,7 +55,6 @@
     NSString *docsDir;
     NSArray *dirPaths;
     
-    const char *dbPath = [databasePath UTF8String];
     sqlite3_stmt *statement;
     
     dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -98,13 +97,12 @@
         } else {
             NSLog(@"Error Statement: %s", sqlite3_errmsg(contactDB));
         }
-        //NSLog(@"Error Statement: %s", sqlite3_errmsg(contactDB));
         
     }
     
     
     [super viewDidLoad];
-    [super viewDidAppear:YES];
+    
     //}
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -115,7 +113,57 @@
 }
 
 - (void) viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
+    
+    int x = 0;
+    NSString *docsDir;
+    NSArray *dirPaths;
+    
+    sqlite3_stmt *statement;
+    
+    dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    
+    docsDir = [dirPaths objectAtIndex:0];
+    
+    databasePath = [[NSString alloc] initWithString: [docsDir stringByAppendingPathComponent:@"tasks.db"]];
+    
+    NSFileManager *fileMgr = [NSFileManager defaultManager];
+    
+    if ([fileMgr fileExistsAtPath: databasePath] == YES){
+        const char *dbPath = [databasePath UTF8String];
+        
+        if (sqlite3_open(dbPath, &contactDB) == SQLITE_OK){
+            
+            NSString *querySQL = [NSString stringWithFormat: @"SELECT name FROM tasks"];
+            const char *query_stmt = [querySQL UTF8String];
+            
+            if (sqlite3_prepare_v2(contactDB, query_stmt, -1, &statement, NULL) == SQLITE_OK){
+                NSMutableArray *tempArray = [NSMutableArray array];
+                
+                while (sqlite3_step(statement) == SQLITE_ROW){
+                    NSString *name = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 0)];
+                    
+                    TaskDetailViewController *taskDetail = [[TaskDetailViewController alloc] initWithNibName:@"TaskDetailViewController" bundle:nil];
+                    taskDetail.title = [NSString stringWithFormat:@"TASK: %@", name];
+                    
+                    x++;
+                    
+                    [tempArray addObject:taskDetail];
+                }
+                self.theControllers = tempArray;
+                sqlite3_finalize(statement);
+                
+            } else {
+                NSLog(@"Error preparing statement");
+            }
+            sqlite3_close(contactDB);
+            
+        } else {
+            NSLog(@"Error Statement: %s", sqlite3_errmsg(contactDB));
+        }
+        
+    }
+    [self.tableView reloadData];
+    [super viewWillAppear:YES];
 }
 
 - (void)didReceiveMemoryWarning

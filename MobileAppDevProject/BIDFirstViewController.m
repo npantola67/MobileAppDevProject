@@ -28,6 +28,7 @@
 							
 - (void)viewDidLoad
 {
+    
     NSString *docsDir;
     NSArray *dirPaths;
     
@@ -61,9 +62,12 @@
     
     [scView setScrollEnabled:YES];
     [scView setContentSize:CGSizeMake(320, 900)];
+     
     [super viewDidLoad];
 
 }
+
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -83,7 +87,7 @@
     const char *dbpath = [databasePath UTF8String];
     
     if (sqlite3_open(dbpath, &contactDB) == SQLITE_OK){
-        NSString *insertSQL = ([NSString stringWithFormat:@"INSERT INTO TASKS (name, postername, description, dateposted, datedue) VALUES (\"nicks task\",\"Pants\",\"This is the desc\",DATETIME('now'),DATETIME('now'))"]);
+        NSString *insertSQL = ([NSString stringWithFormat:@"INSERT INTO TASKS (name, postername, description, dateposted, datedue) VALUES (\"%@\",\"Pants\",\"This is the desc\",DATETIME('now'),DATETIME('now'))",taskName.text]);
         const char *insert_stmt = [insertSQL UTF8String];
         sqlite3_prepare_v2(contactDB, insert_stmt, -1, &statement, NULL);
         if (sqlite3_step(statement) == SQLITE_DONE){
