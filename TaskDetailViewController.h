@@ -14,6 +14,14 @@
     NSString *databasePath;
 }
 @property (strong, nonatomic) IBOutlet UILabel *theLabel;
+
+@property (strong, nonatomic) IBOutlet UILabel *recID;
+@property (strong, nonatomic) IBOutlet UILabel *recordDesc;
+@property (strong, nonatomic) IBOutlet UILabel *dateDue;
+
+
 @property (strong, nonatomic) NSString *message;
+@property (strong, nonatomic) NSString *recordID;
+@property (strong, nonatomic) NSString *theDateDue;
 
 @end

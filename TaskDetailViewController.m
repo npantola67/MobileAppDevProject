@@ -38,6 +38,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     self.theLabel.text = self.message;
+    self.recID.text = self.recordID;
+    self.dateDue.text = self.theDateDue;
     [super viewWillAppear:animated];
 }
 - (void)viewDidUnload {

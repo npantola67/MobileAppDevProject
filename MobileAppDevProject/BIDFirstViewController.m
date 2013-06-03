@@ -62,9 +62,17 @@
     
     [scView setScrollEnabled:YES];
     [scView setContentSize:CGSizeMake(320, 900)];
+    
+    UITapGestureRecognizer *tapScroll = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapped)];
+    tapScroll.cancelsTouchesInView = NO;
+    [scView addGestureRecognizer:tapScroll];
      
     [super viewDidLoad];
 
+}
+
+- (void) tapped {
+    [self.view endEditing:YES];
 }
 
 
@@ -80,6 +88,10 @@
     self.descField = nil;
     self.status = nil;
 }
+/*
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [taskName resignFirstResponder];
+}*/
 
 
 - (IBAction)savePost:(id)sender {

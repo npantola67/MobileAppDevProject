@@ -29,77 +29,8 @@
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
-    
-    
-    int x = 0;
     
     self.title = @"All Tasks";
-    
-    
-    /*
-    while (x < 4) {
-        
-        TaskDetailViewController *taskDetail = [[TaskDetailViewController alloc] initWithNibName:@"TaskDetailViewController" bundle:nil];
-        taskDetail.title = [NSString stringWithFormat:@"Task number %d", x];
-    
-        x++;
-
-        [tempArray addObject:taskDetail];
-     
-    }
-        self.theControllers = tempArray;
-     */
-
-    //load database
-    NSString *docsDir;
-    NSArray *dirPaths;
-    
-    sqlite3_stmt *statement;
-    
-    dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    
-    docsDir = [dirPaths objectAtIndex:0];
-    
-    databasePath = [[NSString alloc] initWithString: [docsDir stringByAppendingPathComponent:@"tasks.db"]];
-    
-    NSFileManager *fileMgr = [NSFileManager defaultManager];
-    
-    if ([fileMgr fileExistsAtPath: databasePath] == YES){
-        const char *dbPath = [databasePath UTF8String];
-        
-        if (sqlite3_open(dbPath, &contactDB) == SQLITE_OK){
-            
-            NSString *querySQL = [NSString stringWithFormat: @"SELECT name FROM tasks"];
-            const char *query_stmt = [querySQL UTF8String];
-            
-            if (sqlite3_prepare_v2(contactDB, query_stmt, -1, &statement, NULL) == SQLITE_OK){
-                NSMutableArray *tempArray = [NSMutableArray array];
-                
-                while (sqlite3_step(statement) == SQLITE_ROW){
-                    NSString *name = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 0)];
-                    
-                    TaskDetailViewController *taskDetail = [[TaskDetailViewController alloc] initWithNibName:@"TaskDetailViewController" bundle:nil];
-                    taskDetail.title = [NSString stringWithFormat:@"%@", name];
-                    
-                    x++;
-                    
-                    [tempArray addObject:taskDetail];
-                }
-                self.theControllers = tempArray;
-                sqlite3_finalize(statement);
-            
-            } else {
-                NSLog(@"Error preparing statement");
-            }
-            sqlite3_close(contactDB);
-            
-        } else {
-            NSLog(@"Error Statement: %s", sqlite3_errmsg(contactDB));
-        }
-        
-    }
-    
     
     [super viewDidLoad];
     
@@ -114,7 +45,6 @@
 
 - (void) viewWillAppear:(BOOL)animated{
     
-    int x = 0;
     NSString *docsDir;
     NSArray *dirPaths;
     
@@ -133,20 +63,30 @@
         
         if (sqlite3_open(dbPath, &contactDB) == SQLITE_OK){
             
-            NSString *querySQL = [NSString stringWithFormat: @"SELECT name FROM tasks"];
+            NSString *querySQL = [NSString stringWithFormat: @"SELECT id, name, datedue FROM tasks"];
             const char *query_stmt = [querySQL UTF8String];
             
             if (sqlite3_prepare_v2(contactDB, query_stmt, -1, &statement, NULL) == SQLITE_OK){
                 NSMutableArray *tempArray = [NSMutableArray array];
                 
                 while (sqlite3_step(statement) == SQLITE_ROW){
-                    NSString *name = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 0)];
+                    NSString *recID = [[NSString alloc] initWithUTF8String:(const char *)sqlite3_column_text(statement, 0)];
+                    
+                    NSString *name = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 1)];
+                    
+                    //NSString *dateDue = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 2)];
+                    
+                    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+                    [dateFormat setDateFormat:@"yyy-MM-dd HH:mm:ss"];
+                    NSDate *dateDue = [dateFormat dateFromString:[NSString stringWithUTF8String:(const char *)sqlite3_column_text(statement, 2)]];
+                    
                     
                     TaskDetailViewController *taskDetail = [[TaskDetailViewController alloc] initWithNibName:@"TaskDetailViewController" bundle:nil];
-                    taskDetail.title = [NSString stringWithFormat:@"TASK: %@", name];
                     
-                    x++;
-                    
+                    taskDetail.title = [NSString stringWithFormat:@"%@", name];
+                    taskDetail.recordID = [NSString stringWithFormat:@"%@", recID];
+                    taskDetail.theDateDue = [NSString stringWithFormat:@"%@",[dateFormat stringFromDate:dateDue]];
+                                        
                     [tempArray addObject:taskDetail];
                 }
                 self.theControllers = tempArray;
@@ -176,7 +116,6 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
     return 1;
 }
@@ -200,8 +139,8 @@
     NSUInteger row = [indexPath row];
         
     TaskDetailViewController *controller = [self.theControllers objectAtIndex:row];
-    controller.theLabel = [NSString stringWithFormat:@"You pressed %@", [[self.theControllers objectAtIndex:row] title]];
-    controller.message = [NSString stringWithFormat:@"You pressed %@", [[self.theControllers objectAtIndex:row] title]];
+    controller.theLabel = [NSString stringWithFormat:@"%@", [[self.theControllers objectAtIndex:row] title]];
+    controller.message = [NSString stringWithFormat:@"%@", [[self.theControllers objectAtIndex:row] title]];
     
     cell.textLabel.text = controller.title;
     //cell.imageView.image = controller.rowImage;
