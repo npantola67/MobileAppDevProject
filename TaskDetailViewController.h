@@ -23,5 +23,6 @@
 @property (strong, nonatomic) NSString *message;
 @property (strong, nonatomic) NSString *recordID;
 @property (strong, nonatomic) NSString *theDateDue;
+@property (strong, nonatomic) NSString *description;
 
 @end

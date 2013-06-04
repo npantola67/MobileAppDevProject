@@ -40,6 +40,7 @@
     self.theLabel.text = self.message;
     self.recID.text = self.recordID;
     self.dateDue.text = self.theDateDue;
+    self.recordDesc.text = self.description;
     [super viewWillAppear:animated];
 }
 - (void)viewDidUnload {

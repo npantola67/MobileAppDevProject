@@ -99,7 +99,7 @@
     const char *dbpath = [databasePath UTF8String];
     
     if (sqlite3_open(dbpath, &contactDB) == SQLITE_OK){
-        NSString *insertSQL = ([NSString stringWithFormat:@"INSERT INTO TASKS (name, postername, description, dateposted, datedue) VALUES (\"%@\",\"Pants\",\"This is the desc\",DATETIME('now'),DATETIME('now'))",taskName.text]);
+        NSString *insertSQL = ([NSString stringWithFormat:@"INSERT INTO TASKS (name, postername, description, dateposted, datedue) VALUES (\"%@\",\"NPants\",\"%@\",DATETIME('now'),DATETIME('now'))",taskName.text, descField.text]);
         const char *insert_stmt = [insertSQL UTF8String];
         sqlite3_prepare_v2(contactDB, insert_stmt, -1, &statement, NULL);
         if (sqlite3_step(statement) == SQLITE_DONE){

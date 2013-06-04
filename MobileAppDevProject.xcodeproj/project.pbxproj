@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A52521D2175E2E5D00B66A53 /* TaskMapView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A52521D1175E2E5D00B66A53 /* TaskMapView.xib */; };
+		A52521D4175E2F0E00B66A53 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A52521D3175E2F0E00B66A53 /* MapKit.framework */; };
 		A536E99B1753F0F1009E2FA6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A536E99A1753F0F1009E2FA6 /* UIKit.framework */; };
 		A536E99D1753F0F1009E2FA6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A536E99C1753F0F1009E2FA6 /* Foundation.framework */; };
 		A536E99F1753F0F1009E2FA6 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A536E99E1753F0F1009E2FA6 /* CoreGraphics.framework */; };
@@ -32,6 +34,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A52521D1175E2E5D00B66A53 /* TaskMapView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TaskMapView.xib; sourceTree = "<group>"; };
+		A52521D3175E2F0E00B66A53 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		A536E9971753F0F1009E2FA6 /* MobileAppDevProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MobileAppDevProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A536E99A1753F0F1009E2FA6 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		A536E99C1753F0F1009E2FA6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -70,6 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A52521D4175E2F0E00B66A53 /* MapKit.framework in Frameworks */,
 				A536E9F8175BD78C009E2FA6 /* libsqlite3.dylib in Frameworks */,
 				A536E99B1753F0F1009E2FA6 /* UIKit.framework in Frameworks */,
 				A536E99D1753F0F1009E2FA6 /* Foundation.framework in Frameworks */,
@@ -101,6 +106,7 @@
 		A536E9991753F0F1009E2FA6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A52521D3175E2F0E00B66A53 /* MapKit.framework */,
 				A536E99A1753F0F1009E2FA6 /* UIKit.framework */,
 				A536E99C1753F0F1009E2FA6 /* Foundation.framework */,
 				A536E99E1753F0F1009E2FA6 /* CoreGraphics.framework */,
@@ -126,6 +132,7 @@
 				A536E9CB1753F1C1009E2FA6 /* MapViewController.h */,
 				A536E9CC1753F1C1009E2FA6 /* MapViewController.m */,
 				A536E9CD1753F1C1009E2FA6 /* MapViewController.xib */,
+				A52521D1175E2E5D00B66A53 /* TaskMapView.xib */,
 				A536E9B51753F0F1009E2FA6 /* first.png */,
 				A536E9B71753F0F1009E2FA6 /* first@2x.png */,
 				A536E9BC1753F0F1009E2FA6 /* second.png */,
@@ -212,6 +219,7 @@
 				A536E9C21753F0F1009E2FA6 /* PostTaskViewController.xib in Resources */,
 				A536E9CF1753F1C1009E2FA6 /* MapViewController.xib in Resources */,
 				A536E9E6175644EA009E2FA6 /* TaskDetailViewController.xib in Resources */,
+				A52521D2175E2E5D00B66A53 /* TaskMapView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -351,6 +359,7 @@
 				A536E9CA1753F0F1009E2FA6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

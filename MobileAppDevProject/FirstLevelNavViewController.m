@@ -63,29 +63,35 @@
         
         if (sqlite3_open(dbPath, &contactDB) == SQLITE_OK){
             
-            NSString *querySQL = [NSString stringWithFormat: @"SELECT id, name, datedue FROM tasks"];
+            NSString *querySQL = [NSString stringWithFormat: @"SELECT id, name, datedue, description FROM tasks"];
             const char *query_stmt = [querySQL UTF8String];
             
             if (sqlite3_prepare_v2(contactDB, query_stmt, -1, &statement, NULL) == SQLITE_OK){
                 NSMutableArray *tempArray = [NSMutableArray array];
                 
                 while (sqlite3_step(statement) == SQLITE_ROW){
+                    //get record ID
                     NSString *recID = [[NSString alloc] initWithUTF8String:(const char *)sqlite3_column_text(statement, 0)];
                     
+                    //get record name
                     NSString *name = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 1)];
                     
-                    //NSString *dateDue = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 2)];
-                    
+                    //set date format
                     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
                     [dateFormat setDateFormat:@"yyy-MM-dd HH:mm:ss"];
+                    //get record date due
                     NSDate *dateDue = [dateFormat dateFromString:[NSString stringWithUTF8String:(const char *)sqlite3_column_text(statement, 2)]];
                     
+                    //get record description
+                    NSString *description = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 3)];
                     
                     TaskDetailViewController *taskDetail = [[TaskDetailViewController alloc] initWithNibName:@"TaskDetailViewController" bundle:nil];
                     
+                    //Set values of the task detail
                     taskDetail.title = [NSString stringWithFormat:@"%@", name];
                     taskDetail.recordID = [NSString stringWithFormat:@"%@", recID];
                     taskDetail.theDateDue = [NSString stringWithFormat:@"%@",[dateFormat stringFromDate:dateDue]];
+                    taskDetail.description = [NSString stringWithFormat:@"%@", description];
                                         
                     [tempArray addObject:taskDetail];
                 }
