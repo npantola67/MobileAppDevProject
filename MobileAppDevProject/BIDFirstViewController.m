@@ -38,7 +38,7 @@
     docsDir = [dirPaths objectAtIndex:0];
     
     //Build path to DB file "tasks.db"
-    databasePath = [[NSString alloc] initWithString: [docsDir stringByAppendingPathComponent:@"tasks.db"]];
+    databasePath = [[NSString alloc] initWithString: [docsDir stringByAppendingPathComponent:@"TaskTaker.db"]];
             
     NSFileManager *fileMgr = [NSFileManager defaultManager];
     
@@ -47,7 +47,7 @@
         
         if (sqlite3_open(dbPath, &contactDB) == SQLITE_OK){
             char *errMsg;
-            const char *sql_stmt = "CREATE TABLE IF NOT EXISTS TASKS (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, POSTERNAME TEXT, DESCRIPTION TEXT, DATEPOSTED DATETIME, DATEDUE DATETIME)";
+            const char *sql_stmt = "CREATE TABLE IF NOT EXISTS TASKS (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, POSTERNAME TEXT, DESCRIPTION TEXT, DATEPOSTED DATETIME, DATEDUE DATETIME, ISTAKEN INTEGER DEFAULT 0)";
             
             if (sqlite3_exec(contactDB, sql_stmt, NULL, NULL, &errMsg) != SQLITE_OK){
                 status.text = @"Failed to create table";

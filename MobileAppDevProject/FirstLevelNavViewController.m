@@ -21,8 +21,7 @@
 {
     self = [super initWithStyle:style];
     if (self) {
-        // Custom initialization
-        self.title = NSLocalizedString(@"Test", @"Test");
+        self.title = NSLocalizedString(@"All Tasks", @"All Tasks");
     }
     return self;
 }
@@ -54,7 +53,7 @@
     
     docsDir = [dirPaths objectAtIndex:0];
     
-    databasePath = [[NSString alloc] initWithString: [docsDir stringByAppendingPathComponent:@"tasks.db"]];
+    databasePath = [[NSString alloc] initWithString: [docsDir stringByAppendingPathComponent:@"TaskTaker.db"]];
     
     NSFileManager *fileMgr = [NSFileManager defaultManager];
     
@@ -63,7 +62,7 @@
         
         if (sqlite3_open(dbPath, &contactDB) == SQLITE_OK){
             
-            NSString *querySQL = [NSString stringWithFormat: @"SELECT id, name, datedue, description FROM tasks"];
+            NSString *querySQL = [NSString stringWithFormat: @"SELECT id, name, datedue, description FROM tasks WHERE istaken=0"];
             const char *query_stmt = [querySQL UTF8String];
             
             if (sqlite3_prepare_v2(contactDB, query_stmt, -1, &statement, NULL) == SQLITE_OK){

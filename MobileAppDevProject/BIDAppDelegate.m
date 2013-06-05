@@ -11,6 +11,7 @@
 #import "BIDFirstViewController.h"
 #import "MapViewController.h"
 #import "FirstLevelNavViewController.h"
+#import "MyTasksNavViewController.h"
 
 @implementation BIDAppDelegate
 
@@ -18,17 +19,18 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
+    //Create tabs for the app
     UIViewController *viewController1 = [[BIDFirstViewController alloc ] initWithNibName:@"PostTaskViewController" bundle:nil];
-    MapViewController *viewController3 = [[MapViewController alloc] initWithNibName:@"MapViewController" bundle:nil];
-
-    
     FirstLevelNavViewController *rootLevel = [[FirstLevelNavViewController alloc] initWithStyle:UITableViewStylePlain];
+    MyTasksNavViewController *rootView = [[MyTasksNavViewController alloc] initWithStyle:UITableViewStylePlain];
+    MapViewController *viewController4 = [[MapViewController alloc] initWithNibName:@"MapViewController" bundle:nil];
+    
     
     self.navBarController = [[UINavigationController alloc] initWithRootViewController:rootLevel];
-    //[self.navBarController addChildViewController:(UIViewController *)
+    self.myTaskNavController = [[UINavigationController alloc] initWithRootViewController:rootView];
     
     self.tabBarController = [[UITabBarController alloc] init];
-    self.tabBarController.viewControllers = @[viewController1, self.navBarController, viewController3];
+    self.tabBarController.viewControllers = @[viewController1, self.navBarController, self.myTaskNavController, viewController4];
     self.window.rootViewController = self.tabBarController;
     [self.window makeKeyAndVisible];
     return YES;

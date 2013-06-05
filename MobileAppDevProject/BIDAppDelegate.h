@@ -16,4 +16,6 @@
 
 @property (strong, nonatomic) UINavigationController *navBarController;
 
+@property (strong, nonatomic) UINavigationController *myTaskNavController;
+
 @end

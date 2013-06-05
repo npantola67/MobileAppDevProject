@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		A52521D2175E2E5D00B66A53 /* TaskMapView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A52521D1175E2E5D00B66A53 /* TaskMapView.xib */; };
 		A52521D4175E2F0E00B66A53 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A52521D3175E2F0E00B66A53 /* MapKit.framework */; };
+		A52521D7175F7E6100B66A53 /* MyTasksNavViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A52521D6175F7E6100B66A53 /* MyTasksNavViewController.m */; };
 		A536E99B1753F0F1009E2FA6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A536E99A1753F0F1009E2FA6 /* UIKit.framework */; };
 		A536E99D1753F0F1009E2FA6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A536E99C1753F0F1009E2FA6 /* Foundation.framework */; };
 		A536E99F1753F0F1009E2FA6 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A536E99E1753F0F1009E2FA6 /* CoreGraphics.framework */; };
@@ -36,6 +37,8 @@
 /* Begin PBXFileReference section */
 		A52521D1175E2E5D00B66A53 /* TaskMapView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TaskMapView.xib; sourceTree = "<group>"; };
 		A52521D3175E2F0E00B66A53 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		A52521D5175F7E6100B66A53 /* MyTasksNavViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTasksNavViewController.h; sourceTree = "<group>"; };
+		A52521D6175F7E6100B66A53 /* MyTasksNavViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTasksNavViewController.m; sourceTree = "<group>"; };
 		A536E9971753F0F1009E2FA6 /* MobileAppDevProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MobileAppDevProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A536E99A1753F0F1009E2FA6 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		A536E99C1753F0F1009E2FA6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -119,6 +122,8 @@
 			children = (
 				A536E9A91753F0F1009E2FA6 /* BIDAppDelegate.h */,
 				A536E9AA1753F0F1009E2FA6 /* BIDAppDelegate.m */,
+				A52521D5175F7E6100B66A53 /* MyTasksNavViewController.h */,
+				A52521D6175F7E6100B66A53 /* MyTasksNavViewController.m */,
 				A536E9DA1754F777009E2FA6 /* FirstLevelNavViewController.h */,
 				A536E9DB1754F777009E2FA6 /* FirstLevelNavViewController.m */,
 				A536E9E2175644EA009E2FA6 /* TaskDetailViewController.h */,
@@ -237,6 +242,7 @@
 				A536E9DC1754F777009E2FA6 /* FirstLevelNavViewController.m in Sources */,
 				A536E9E5175644EA009E2FA6 /* TaskDetailViewController.m in Sources */,
 				A536E9E917564972009E2FA6 /* SecondLevelViewController.m in Sources */,
+				A52521D7175F7E6100B66A53 /* MyTasksNavViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
