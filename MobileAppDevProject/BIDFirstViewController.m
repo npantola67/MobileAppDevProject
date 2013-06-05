@@ -105,6 +105,9 @@
         if (sqlite3_step(statement) == SQLITE_DONE){
             status.text = @"Task Added";
             //Clear the values here
+            self.taskName.text = @"";
+            self.posterName.text = @"";
+            self.descField.text = @"";
         } else {
             status.text = @"Failed to add task";
             NSLog(@"SQLITE ERROR: %s", sqlite3_errmsg(contactDB));

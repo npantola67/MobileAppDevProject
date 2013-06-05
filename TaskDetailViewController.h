@@ -25,4 +25,6 @@
 @property (strong, nonatomic) NSString *theDateDue;
 @property (strong, nonatomic) NSString *description;
 
+- (IBAction)takeTask:(id)sender;
+
 @end

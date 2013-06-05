@@ -44,7 +44,7 @@
     
     sqlite3_stmt *statement;
     
-    dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentationDirectory, NSUserDomainMask, YES);
+    dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     
     docsDir = [dirPaths objectAtIndex:0];
     
@@ -62,15 +62,44 @@
             if(sqlite3_prepare_v2(contactDB, query_stmt, -1, &statement, NULL) == SQLITE_OK){
                 NSMutableArray *tempArray = [NSMutableArray array];
                 
+                while (sqlite3_step(statement) == SQLITE_ROW) {
+                    NSString *recID = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 0)];
+                    
+                    NSString *name = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 1)];
+                    
+                    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+                    [dateFormat setDateFormat:@"yy-MM-dd HH:mm:ss"];
+                    
+                    NSDate *dateDue = [dateFormat dateFromString:[NSString stringWithUTF8String:(const char *)sqlite3_column_text(statement, 2)]];
+                    
+                    NSString *desc = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 3)];
+                    
+                    TaskDetailViewController *taskDetail = [[TaskDetailViewController alloc] initWithNibName:@"TaskDetailViewController" bundle:nil];
+                    
+                    //set values for the task detail
+                    taskDetail.title = [NSString stringWithFormat:@"%@", name];
+                    taskDetail.recordID = [NSString stringWithFormat:@"%@", recID];
+                    taskDetail.theDateDue = [NSString stringWithFormat:@"%@", [dateFormat stringFromDate:dateDue]];
+                    taskDetail.description = [NSString stringWithFormat:@"%@", desc];
+                    
+                    [tempArray addObject:taskDetail];
+                    
+                }
+                self.theControllers = tempArray;
+                sqlite3_finalize(statement);
                 
-                
+            } else {
+                NSLog(@"Error Preparing Statement");
             }
+            sqlite3_close(contactDB);
             
-            
+        } else {
+            NSLog(@"Error Statement: %s", sqlite3_errmsg(contactDB));
         }
         
     }
-    
+    [self.tableView reloadData];
+    [super viewWillAppear:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -96,9 +125,22 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    }
     
     // Configure the cell...
+    
+    NSUInteger row = [indexPath row];
+    
+    TaskDetailViewController *controller = [self.theControllers objectAtIndex:row];
+    controller.theLabel = [NSString stringWithFormat:@"%@", [[self.theControllers objectAtIndex:row] title]];
+    controller.message = [NSString stringWithFormat:@"%@", [[self.theControllers objectAtIndex:row] title]];
+    
+    cell.textLabel.text = controller.title;
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
     
     return cell;
 }
@@ -146,6 +188,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSUInteger row = [indexPath row];
+    
+    TaskDetailViewController *controller = [self.theControllers objectAtIndex:row];
+    [self.navigationController pushViewController:controller animated:YES];
+    
     // Navigation logic may go here. Create and push another view controller.
     /*
      <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
@@ -154,5 +201,20 @@
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
 }
+
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath: (NSIndexPath *)indexPath
+{
+    if (_childController == nil) {
+        _childController = [[TaskDetailViewController alloc] initWithNibName:@"TaskDetailViewController" bundle:nil];
+    }
+    _childController.title = @"Task Button Pressed";
+    NSUInteger row = [indexPath row];
+    NSString *selected = [_theControllers objectAtIndex:row];
+    NSString *detailMessage = [[NSString alloc]initWithFormat:@"You pressed...%@", selected];
+    _childController.message = detailMessage;
+    _childController.title = selected;
+    [self.navigationController pushViewController:_childController animated:YES];
+}
+
 
 @end

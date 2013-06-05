@@ -51,4 +51,46 @@
 
 
 
+- (IBAction)takeTask:(id)sender {
+    NSString *docsDir;
+    NSArray *dirPaths;
+    
+    sqlite3_stmt *statement;
+    
+    dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    
+    docsDir = [dirPaths objectAtIndex:0];
+    
+    databasePath = [[NSString alloc] initWithString: [docsDir stringByAppendingPathComponent:@"TaskTaker.db"]];
+    
+    NSFileManager *fileMgr = [NSFileManager defaultManager];
+    
+    if([fileMgr fileExistsAtPath:databasePath] == YES){
+        const char *dbPath = [databasePath UTF8String];
+        
+        if (sqlite3_open(dbPath, &contactDB) == SQLITE_OK){
+            NSString *querySQL = [NSString stringWithFormat:@"Update tasks set istaken=1 WHERE id = %@", self.recordID];
+            const char *query_stmt = [querySQL UTF8String];
+            
+            if(sqlite3_prepare_v2(contactDB, query_stmt, -1, &statement, NULL) == SQLITE_OK){
+                
+                if(sqlite3_step(statement) == SQLITE_DONE){
+                    //Successfully updated record
+                } else {
+                    NSLog(@"Error executing sql statement");
+                }
+                sqlite3_finalize(statement);
+                
+            } else {
+                NSLog(@"Error Preparing Statement");
+            }
+            sqlite3_close(contactDB);
+            
+        } else {
+            NSLog(@"Error Statement: %s", sqlite3_errmsg(contactDB));
+        }
+        
+    }
+    
+}
 @end
