@@ -98,22 +98,28 @@
     sqlite3_stmt *statement;
     const char *dbpath = [databasePath UTF8String];
     
-    if (sqlite3_open(dbpath, &contactDB) == SQLITE_OK){
-        NSString *insertSQL = ([NSString stringWithFormat:@"INSERT INTO TASKS (name, postername, description, dateposted, datedue) VALUES (\"%@\",\"NPants\",\"%@\",DATETIME('now'),DATETIME('now'))",taskName.text, descField.text]);
-        const char *insert_stmt = [insertSQL UTF8String];
-        sqlite3_prepare_v2(contactDB, insert_stmt, -1, &statement, NULL);
-        if (sqlite3_step(statement) == SQLITE_DONE){
-            status.text = @"Task Added";
-            //Clear the values here
-            self.taskName.text = @"";
-            self.posterName.text = @"";
-            self.descField.text = @"";
-        } else {
-            status.text = @"Failed to add task";
-            NSLog(@"SQLITE ERROR: %s", sqlite3_errmsg(contactDB));
+    if (self.taskName.text.length < 1 || self.descField.text.length < 1){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Enter Valid Values" message:@"Please enter values into the text fields" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+        
+    } else {
+        if (sqlite3_open(dbpath, &contactDB) == SQLITE_OK){
+            NSString *insertSQL = ([NSString stringWithFormat:@"INSERT INTO TASKS (name, postername, description, dateposted, datedue) VALUES (\"%@\",\"NPants\",\"%@\",DATETIME('now'),DATETIME('now'))",taskName.text, descField.text]);
+            const char *insert_stmt = [insertSQL UTF8String];
+            sqlite3_prepare_v2(contactDB, insert_stmt, -1, &statement, NULL);
+            if (sqlite3_step(statement) == SQLITE_DONE){
+                status.text = @"Task Added";
+                //Clear the values here
+                self.taskName.text = @"";
+                self.posterName.text = @"";
+                self.descField.text = @"";
+            } else {
+                status.text = @"Failed to add task";
+                NSLog(@"SQLITE ERROR: %s", sqlite3_errmsg(contactDB));
+            }
+            sqlite3_finalize(statement);
+            sqlite3_close(contactDB);
         }
-        sqlite3_finalize(statement);
-        sqlite3_close(contactDB);
     }
 }
 
