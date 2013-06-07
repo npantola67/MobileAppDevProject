@@ -46,6 +46,8 @@
 - (void)viewDidUnload {
     self.theLabel = nil;
     self.message = nil;
+    self.recID = nil;
+    self.dateDue = nil;
     [super viewDidUnload];
 }
 

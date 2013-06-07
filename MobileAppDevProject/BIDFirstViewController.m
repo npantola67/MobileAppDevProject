@@ -49,7 +49,7 @@
         
         if (sqlite3_open(dbPath, &contactDB) == SQLITE_OK){
             char *errMsg;
-            const char *sql_stmt = "CREATE TABLE IF NOT EXISTS TASKS (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, POSTERNAME TEXT, DESCRIPTION TEXT, DATEPOSTED DATETIME, DATEDUE DATETIME, ISTAKEN INTEGER DEFAULT 0)";
+            const char *sql_stmt = "CREATE TABLE IF NOT EXISTS TASKS (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, POSTERNAME TEXT, DESCRIPTION TEXT, DATEPOSTED DATETIME, DATEDUE TEXT, ISTAKEN INTEGER DEFAULT 0)";
             
             if (sqlite3_exec(contactDB, sql_stmt, NULL, NULL, &errMsg) != SQLITE_OK){
                 status.text = @"Failed to create table";
@@ -102,6 +102,11 @@
 
 
 - (IBAction)savePost:(id)sender {
+    //Get date from date picker
+    NSDate *date = [self.datePicker date];
+    
+    
+    //find the DB and insert into
     sqlite3_stmt *statement;
     const char *dbpath = [databasePath UTF8String];
     
@@ -111,7 +116,8 @@
         
     } else {
         if (sqlite3_open(dbpath, &contactDB) == SQLITE_OK){
-            NSString *insertSQL = ([NSString stringWithFormat:@"INSERT INTO TASKS (name, postername, description, dateposted, datedue) VALUES (\"%@\",\"NPants\",\"%@\",DATETIME('now'),DATETIME('now'))",taskName.text, descField.text]);
+            NSString *insertSQL = ([NSString stringWithFormat:@"INSERT INTO TASKS (name, postername, description, dateposted, datedue) VALUES (\"%@\",\"NPants\",\"%@\",DATETIME('now'),\"%@\")",taskName.text, descField.text,date]);
+            NSLog(@"Date: %@", date);
             const char *insert_stmt = [insertSQL UTF8String];
             sqlite3_prepare_v2(contactDB, insert_stmt, -1, &statement, NULL);
             if (sqlite3_step(statement) == SQLITE_DONE){
@@ -126,6 +132,8 @@
             }
             sqlite3_finalize(statement);
             sqlite3_close(contactDB);
+        } else {
+            NSLog(@"Error Opening Database");
         }
     }
 }

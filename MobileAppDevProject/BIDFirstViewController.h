@@ -26,6 +26,7 @@
 @property (strong, nonatomic) IBOutlet UITextField *descField;
 @property (strong, nonatomic) IBOutlet UITextView *largeDescField;
 @property (strong, nonatomic) IBOutlet UILabel *status;
+@property (strong, nonatomic) IBOutlet UIDatePicker *datePicker;
 
 - (IBAction)savePost:(id)sender;
 

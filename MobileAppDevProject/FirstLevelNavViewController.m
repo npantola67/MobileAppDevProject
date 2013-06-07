@@ -78,10 +78,11 @@
                     
                     //set date format
                     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-                    [dateFormat setDateFormat:@"yyy-MM-dd HH:mm:ss"];
+                    [dateFormat setDateFormat:@"yyy-MM-dd"];
                     //get record date due
-                    NSDate *dateDue = [dateFormat dateFromString:[NSString stringWithUTF8String:(const char *)sqlite3_column_text(statement, 2)]];
-                    
+                    //NSDate *dateDue = [dateFormat dateFromString:[NSString stringWithUTF8String:(const char *)sqlite3_column_text(statement, 2)]];
+                    NSString *dateDue = [[NSString alloc] initWithUTF8String:(const char *)sqlite3_column_text(statement, 2)];
+                                        
                     //get record description
                     NSString *description = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 3)];
                     
@@ -90,7 +91,7 @@
                     //Set values of the task detail
                     taskDetail.title = [NSString stringWithFormat:@"%@", name];
                     taskDetail.recordID = [NSString stringWithFormat:@"%@", recID];
-                    taskDetail.theDateDue = [NSString stringWithFormat:@"%@",[dateFormat stringFromDate:dateDue]];
+                    taskDetail.theDateDue = [NSString stringWithFormat:@"%@",dateDue];
                     taskDetail.description = [NSString stringWithFormat:@"%@", description];
                                         
                     [tempArray addObject:taskDetail];
