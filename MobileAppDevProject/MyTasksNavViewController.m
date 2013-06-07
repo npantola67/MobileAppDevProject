@@ -98,6 +98,7 @@
         }
         
     }
+
     [self.tableView reloadData];
     [super viewWillAppear:YES];
 }

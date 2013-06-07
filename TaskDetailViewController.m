@@ -85,12 +85,18 @@
                 NSLog(@"Error Preparing Statement");
             }
             sqlite3_close(contactDB);
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Task Added" message:@"Task added  to 'My Tasks'" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alert show];
             
         } else {
             NSLog(@"Error Statement: %s", sqlite3_errmsg(contactDB));
         }
         
     }
+    /*
+     Want to reload the parent controller(FirstLevelNavView) of this one when task is taken
+     */
+
     
 }
 @end

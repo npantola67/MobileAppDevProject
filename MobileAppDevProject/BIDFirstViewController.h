@@ -22,6 +22,7 @@
 @property (strong, nonatomic) IBOutlet UIScrollView *scView;
 @property (strong, nonatomic) IBOutlet UITextField *taskName;
 @property (strong, nonatomic) IBOutlet UITextField *posterName;
+//Use below for the description text field
 @property (strong, nonatomic) IBOutlet UITextField *descField;
 @property (strong, nonatomic) IBOutlet UITextView *largeDescField;
 @property (strong, nonatomic) IBOutlet UILabel *status;

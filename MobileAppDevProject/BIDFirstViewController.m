@@ -7,6 +7,8 @@
 //
 
 #import "BIDFirstViewController.h"
+#import <QuartzCore/QuartzCore.h>
+
 
 @interface BIDFirstViewController ()
 
@@ -66,6 +68,11 @@
     UITapGestureRecognizer *tapScroll = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapped)];
     tapScroll.cancelsTouchesInView = NO;
     [scView addGestureRecognizer:tapScroll];
+    
+    //Set UITextView border and shading
+    [[self.descField layer] setBorderColor:[[UIColor grayColor] CGColor]];
+    [[self.descField layer] setBorderWidth:2.3];
+    [[self.descField layer] setCornerRadius:15];
      
     [super viewDidLoad];
 

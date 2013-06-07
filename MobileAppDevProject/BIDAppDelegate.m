@@ -33,8 +33,11 @@
     self.tabBarController.viewControllers = @[viewController1, self.navBarController, self.myTaskNavController, viewController4];
     self.window.rootViewController = self.tabBarController;
     [self.window makeKeyAndVisible];
+    
     return YES;
 }
+
+
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
@@ -64,11 +67,12 @@
 }
 
 /*
-// Optional UITabBarControllerDelegate method.
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
 {
+
 }
-*/
+ */
+
 
 /*
 // Optional UITabBarControllerDelegate method.
