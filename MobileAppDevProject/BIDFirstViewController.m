@@ -63,7 +63,7 @@
     
     
     [scView setScrollEnabled:YES];
-    [scView setContentSize:CGSizeMake(320, 900)];
+    [scView setContentSize:CGSizeMake(320, 800)];
     
     UITapGestureRecognizer *tapScroll = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapped)];
     tapScroll.cancelsTouchesInView = NO;
@@ -110,14 +110,13 @@
     sqlite3_stmt *statement;
     const char *dbpath = [databasePath UTF8String];
     
-    if (self.taskName.text.length < 1 || self.descField.text.length < 1){
+    if (self.taskName.text.length < 1 || self.descField.text.length < 1 || self.posterName.text.length < 1){
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Enter Valid Values" message:@"Please enter values into the text fields" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
         
     } else {
         if (sqlite3_open(dbpath, &contactDB) == SQLITE_OK){
-            NSString *insertSQL = ([NSString stringWithFormat:@"INSERT INTO TASKS (name, postername, description, dateposted, datedue) VALUES (\"%@\",\"NPants\",\"%@\",DATETIME('now'),\"%@\")",taskName.text, descField.text,date]);
-            NSLog(@"Date: %@", date);
+            NSString *insertSQL = ([NSString stringWithFormat:@"INSERT INTO TASKS (name, postername, description, dateposted, datedue) VALUES (\"%@\",\"%@\",\"%@\",DATETIME('now'),\"%@\")",taskName.text, posterName.text, descField.text,date]);
             const char *insert_stmt = [insertSQL UTF8String];
             sqlite3_prepare_v2(contactDB, insert_stmt, -1, &statement, NULL);
             if (sqlite3_step(statement) == SQLITE_DONE){
@@ -132,6 +131,10 @@
             }
             sqlite3_finalize(statement);
             sqlite3_close(contactDB);
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Task Added" message:@"This task has been saved and added to 'All Tasks'" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            
+            [alert show];
         } else {
             NSLog(@"Error Opening Database");
         }

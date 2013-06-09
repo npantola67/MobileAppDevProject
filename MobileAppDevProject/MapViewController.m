@@ -7,6 +7,11 @@
 //
 
 #import "MapViewController.h"
+#import <CoreLocation/CoreLocation.h>
+#import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
+#import <CoreLocation/CoreLocation.h>
+#define METERS_PER_MILE 5000
 
 @interface MapViewController ()
 
@@ -24,6 +29,17 @@
     }
     return self;
 }
+- (void)viewWillAppear:(BOOL)animated{
+    
+    CLLocationCoordinate2D zoomLocation;
+    zoomLocation.latitude = 41.85000;
+    zoomLocation.longitude= -87.65000;
+    
+    MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(zoomLocation, METERS_PER_MILE, METERS_PER_MILE);
+    
+    [_mapView setRegion:viewRegion animated:YES];
+}
+
 
 - (void)viewDidLoad
 {

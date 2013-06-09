@@ -32,6 +32,7 @@
 		A536E9E6175644EA009E2FA6 /* TaskDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A536E9E4175644EA009E2FA6 /* TaskDetailViewController.xib */; };
 		A536E9E917564972009E2FA6 /* SecondLevelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A536E9E817564972009E2FA6 /* SecondLevelViewController.m */; };
 		A536E9F8175BD78C009E2FA6 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A536E9F7175BD78C009E2FA6 /* libsqlite3.dylib */; };
+		A58E8EAB1764FECF004470F7 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A58E8EAA1764FECF004470F7 /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,6 +71,7 @@
 		A536E9E717564972009E2FA6 /* SecondLevelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecondLevelViewController.h; sourceTree = "<group>"; };
 		A536E9E817564972009E2FA6 /* SecondLevelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecondLevelViewController.m; sourceTree = "<group>"; };
 		A536E9F7175BD78C009E2FA6 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		A58E8EAA1764FECF004470F7 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A58E8EAB1764FECF004470F7 /* CoreLocation.framework in Frameworks */,
 				A52521D4175E2F0E00B66A53 /* MapKit.framework in Frameworks */,
 				A536E9F8175BD78C009E2FA6 /* libsqlite3.dylib in Frameworks */,
 				A536E99B1753F0F1009E2FA6 /* UIKit.framework in Frameworks */,
@@ -91,6 +94,7 @@
 		A536E98E1753F0F1009E2FA6 = {
 			isa = PBXGroup;
 			children = (
+				A58E8EAA1764FECF004470F7 /* CoreLocation.framework */,
 				A536E9F7175BD78C009E2FA6 /* libsqlite3.dylib */,
 				A536E9A01753F0F1009E2FA6 /* MobileAppDevProject */,
 				A536E9991753F0F1009E2FA6 /* Frameworks */,

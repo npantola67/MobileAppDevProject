@@ -6,8 +6,11 @@
 //  Copyright (c) 2013 Pantola. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
+#import <MapKit/MapKit.h>
 
 @interface MapViewController : UIViewController
+
+@property (strong, nonatomic) IBOutlet MKMapView *mapView;
 
 @end

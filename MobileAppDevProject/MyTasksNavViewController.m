@@ -56,7 +56,7 @@
         const char *dbPath = [databasePath UTF8String];
         
         if (sqlite3_open(dbPath, &contactDB) == SQLITE_OK){
-            NSString *querySQL = [NSString stringWithFormat:@"Select id, name, datedue, description FROM tasks WHERE istaken = 1"];
+            NSString *querySQL = [NSString stringWithFormat:@"Select id, name, datedue, description, postername, dateposted FROM tasks WHERE istaken = 1"];
             const char *query_stmt = [querySQL UTF8String];
             
             if(sqlite3_prepare_v2(contactDB, query_stmt, -1, &statement, NULL) == SQLITE_OK){
@@ -77,14 +77,20 @@
                     
                     NSString *desc = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 3)];
                     
+                    NSString *poster = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 4)];
+                    
+                    NSString *datePosted = [[NSString alloc] initWithUTF8String:(const char *) sqlite3_column_text(statement, 5)];
+                    
                     TaskDetailViewController *taskDetail = [[TaskDetailViewController alloc] initWithNibName:@"TaskDetailViewController" bundle:nil];
                     
                     //set values for the task detail
                     taskDetail.title = [NSString stringWithFormat:@"%@", name];
                     taskDetail.recordID = [NSString stringWithFormat:@"%@", recID];
-                    //taskDetail.theDateDue = [NSString stringWithFormat:@"%@", [dateFormat stringFromDate:dateDue]];
                     taskDetail.theDateDue = [NSString stringWithFormat:@"%@", dateDue];
                     taskDetail.description = [NSString stringWithFormat:@"%@", desc];
+                    taskDetail.thePosterName = [NSString stringWithFormat:@"%@", poster];
+                    taskDetail.theDatePosted = [NSString stringWithFormat:@"%@", datePosted];
+                    taskDetail.isTaken = YES;
                                         
                     [tempArray addObject:taskDetail];
                     
